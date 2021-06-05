@@ -1,23 +1,17 @@
 package com.patryk.marcisz.gumtreecopy.model.dao;
 
-import lombok.Data;
-
 import javax.persistence.*;
 
-@Data
 @Entity
-@Table(name = "users")
-public class UserEntity {
+@Table(name = "categories")
+public class CategoryEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String mail;
+    private String name;
 
-    private String nick;
-
-    private String password;
-
+    private Long parent;
 
 }
