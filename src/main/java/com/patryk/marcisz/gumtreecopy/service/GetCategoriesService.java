@@ -6,6 +6,7 @@ import com.patryk.marcisz.gumtreecopy.model.dto.categories.main.MainCategoryResp
 import com.patryk.marcisz.gumtreecopy.model.dto.categories.main.SubcategoryResponse;
 import com.patryk.marcisz.gumtreecopy.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,14 @@ public class GetCategoriesService {
                 .build();
     }
 
+    public MainCategoryResponse getSubcategoriesForCategory(String categoryName) {
+        CategoryEntity entity = categoryRepository.findAll().stream()  //nie jest to najwydajniejsze rozwiazanie na swiecie, trzeba bedzie per categoryId chyba ;)
+                .filter(category -> StringUtils.stripAccents(category.getName()).replaceAll("\\s+", "-").toLowerCase().equals(categoryName))
+                .findAny()
+                .orElseThrow(() -> new RuntimeException("category not found"));
+        return convertCategoryEntityToDto().apply(entity);
+    }
+
     private Function<CategoryEntity, MainCategoryResponse> convertCategoryEntityToDto() {
         return category ->
                 MainCategoryResponse.builder()
@@ -43,4 +52,5 @@ public class GetCategoriesService {
                 .map(subcategory -> SubcategoryResponse.builder().subcategoryName(subcategory.getName()).build())
                 .collect(Collectors.toList());
     }
+
 }
