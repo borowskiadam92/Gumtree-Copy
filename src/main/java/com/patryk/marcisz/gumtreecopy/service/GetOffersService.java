@@ -20,9 +20,10 @@ public class GetOffersService {
                         .id(offer.getId())
                         .title(offer.getTitle())
                         .price(offer.getPrice())
+                        .creatorId(offer.getCreator().getId())
                         .categoryId(offer.getCategory().getId())
                         .publishDate(offer.getPublishDate().format(DateTimeFormatter.BASIC_ISO_DATE))
-                        .description(offer.getContent())
+                        .content(offer.getContent())
                         .build())
                 .orElseThrow(() -> new RuntimeException("offer not found"));
     }

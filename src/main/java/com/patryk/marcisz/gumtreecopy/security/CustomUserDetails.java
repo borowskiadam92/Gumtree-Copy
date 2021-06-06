@@ -30,7 +30,7 @@ public class CustomUserDetails implements UserDetailsService {
         List<String> userAuthorities = userEntity.getAuthorities().stream().map(AuthorityEntity::getName).collect(Collectors.toList());
 
         return User.builder()
-                .username(username)
+                .username(userEntity.getMail())
                 .password(userEntity.getPassword())
                 .authorities(userAuthorities.toArray(String[]::new))
                 .build();

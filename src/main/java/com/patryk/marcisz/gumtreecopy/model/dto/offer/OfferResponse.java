@@ -11,7 +11,8 @@ public class OfferResponse {
     private BigInteger id;
     private String title;
     private long price;
+    private long creatorId;
     private long categoryId;
     private String publishDate;
-    private String description;
+    private String content;
 }

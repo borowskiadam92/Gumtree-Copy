@@ -26,5 +26,7 @@ public class OfferEntity {
     private LocalDate publishDate;
     private String content;
     private Integer price;
+    @OneToOne
+    private UserEntity creator;
 
 }
