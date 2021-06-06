@@ -1,30 +1,23 @@
 package com.patryk.marcisz.gumtreecopy.service;
 
+import com.patryk.marcisz.gumtreecopy.converters.OfferResponseConverter;
 import com.patryk.marcisz.gumtreecopy.model.dto.offer.OfferResponse;
-import com.patryk.marcisz.gumtreecopy.repository.OffersRepository;
+import com.patryk.marcisz.gumtreecopy.repository.OfferRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
-import java.time.format.DateTimeFormatter;
 
 @Service
 @RequiredArgsConstructor
 public class GetOffersService {
 
-    private final OffersRepository offersRepository;
+    private final OfferRepository offerRepository;
+    private final OfferResponseConverter offerResponseConverter;
 
     public OfferResponse getOfferById(BigInteger id) {
-        return offersRepository.findById(id)
-                .map(offer -> OfferResponse.builder()
-                        .id(offer.getId())
-                        .title(offer.getTitle())
-                        .price(offer.getPrice())
-                        .creatorId(offer.getCreator().getId())
-                        .categoryId(offer.getCategory().getId())
-                        .publishDate(offer.getPublishDate().format(DateTimeFormatter.BASIC_ISO_DATE))
-                        .content(offer.getContent())
-                        .build())
+        return offerRepository.findById(id)
+                .map(offerResponseConverter::toDto)
                 .orElseThrow(() -> new RuntimeException("offer not found"));
     }
 }

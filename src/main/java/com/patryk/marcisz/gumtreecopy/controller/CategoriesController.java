@@ -1,5 +1,6 @@
 package com.patryk.marcisz.gumtreecopy.controller;
 
+import com.patryk.marcisz.gumtreecopy.model.dto.categories.CategoryOffersResponse;
 import com.patryk.marcisz.gumtreecopy.model.dto.categories.main.GetMainCategoriesResponse;
 import com.patryk.marcisz.gumtreecopy.model.dto.categories.main.MainCategoryResponse;
 import com.patryk.marcisz.gumtreecopy.service.GetCategoriesService;
@@ -24,6 +25,11 @@ public class CategoriesController {
     @GetMapping(value = "/{categoryName}")
     public MainCategoryResponse getSubcategoriesForCategory(@PathVariable String categoryName){
         return getCategoriesService.getSubcategoriesForCategory(categoryName);
+    }
+
+    @GetMapping(value = "/{categoryName}/offers")
+    public CategoryOffersResponse getOffersForCategories(@PathVariable String categoryName){
+        return getCategoriesService.getOffersForCategory(categoryName);
     }
 
 }

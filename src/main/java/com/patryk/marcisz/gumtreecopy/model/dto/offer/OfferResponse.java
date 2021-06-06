@@ -10,7 +10,7 @@ import java.math.BigInteger;
 public class OfferResponse {
     private BigInteger id;
     private String title;
-    private long price;
+    private int price;
     private long creatorId;
     private long categoryId;
     private String publishDate;

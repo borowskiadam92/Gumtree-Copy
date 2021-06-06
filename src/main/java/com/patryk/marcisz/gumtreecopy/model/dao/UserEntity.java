@@ -31,4 +31,6 @@ public class UserEntity {
     @ManyToMany
     private List<AuthorityEntity> authorities;
 
+    @OneToMany
+    private List<OfferEntity> offers;
 }

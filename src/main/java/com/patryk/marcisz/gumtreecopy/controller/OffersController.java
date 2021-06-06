@@ -24,8 +24,8 @@ public class OffersController {
     }
 
     @PostMapping
-    public void createOffer(@RequestBody CreateOfferRequest createOfferRequest, Principal principal){
-        createOfferService.createOffer(createOfferRequest, principal.getName());
+    public void createOffer(@RequestBody CreateOfferRequest createOfferRequest){
+        createOfferService.createOffer(createOfferRequest);
     }
 
 }
