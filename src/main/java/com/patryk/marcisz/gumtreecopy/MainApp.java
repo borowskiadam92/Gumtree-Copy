@@ -61,7 +61,8 @@ public class MainApp implements ApplicationRunner {
                 .category(mieszkanieIdomyDoWynajecia)
                 .publishDate(LocalDate.now())
                 .content("Wiecie co to jagodzianka? To nie drożdżówka. Myśleliście, że to drożdżówka, a to nie drożdżówka")
-                .build()) ;
+                .build()
+        );
     }
 
     private void setUpDomIogrodCategory() {

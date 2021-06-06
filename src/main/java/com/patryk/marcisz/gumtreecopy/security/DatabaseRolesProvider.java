@@ -6,7 +6,6 @@ import com.patryk.marcisz.gumtreecopy.repository.AuthoritiesRepository;
 import com.patryk.marcisz.gumtreecopy.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,6 @@ import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor
-@Profile("inMemoryDatabase")
 public class DatabaseRolesProvider implements CommandLineRunner {
 
     private final AuthoritiesRepository authoritiesRepository;
@@ -24,11 +22,11 @@ public class DatabaseRolesProvider implements CommandLineRunner {
     @Override
     public void run(String... args) {
         AuthorityEntity adminRole = new AuthorityEntity();
-        adminRole.setAuthority("ROLE_ADMIN");
+        adminRole.setName("ROLE_ADMIN");
         adminRole = authoritiesRepository.save(adminRole);
 
         AuthorityEntity userRole = new AuthorityEntity();
-        userRole.setAuthority("ROLE_USER");
+        userRole.setName("ROLE_USER");
         userRole = authoritiesRepository.save(userRole);
 
         UserEntity admin = new UserEntity();
