@@ -2,22 +2,23 @@ package com.patryk.marcisz.gumtreecopy;
 
 import com.patryk.marcisz.gumtreecopy.model.dao.CategoryEntity;
 import com.patryk.marcisz.gumtreecopy.model.dao.OfferEntity;
-import com.patryk.marcisz.gumtreecopy.repository.CategoryRepository;
+import com.patryk.marcisz.gumtreecopy.repository.CategoriesRepository;
 import com.patryk.marcisz.gumtreecopy.repository.OffersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-//@EnableGlobalMethodSecurity(
-//        prePostEnabled = true,
-//        securedEnabled = true,
-//        jsr250Enabled = true)
+@EnableGlobalMethodSecurity(
+        prePostEnabled = true,
+        securedEnabled = true,
+        jsr250Enabled = true)
 @SpringBootApplication
 @RequiredArgsConstructor
 public class MainApp implements ApplicationRunner {
@@ -26,7 +27,7 @@ public class MainApp implements ApplicationRunner {
         SpringApplication.run(MainApp.class, args);
     }
 
-    private final CategoryRepository categoryRepository;
+    private final CategoriesRepository categoriesRepository;
     private final OffersRepository offersRepository;
 
     @Override
@@ -38,16 +39,16 @@ public class MainApp implements ApplicationRunner {
 
     private void setUpNieruchomosciCategory() {
         CategoryEntity nieruchomosci = CategoryEntity.builder().name("Nieruchomości").children(new ArrayList<>()).build();
-        nieruchomosci = categoryRepository.save(nieruchomosci);
+        nieruchomosci = categoriesRepository.save(nieruchomosci);
 
         CategoryEntity pokojeDoWynajecia = CategoryEntity.builder().name("pokoje do wynajęcia").parent(nieruchomosci).build();
-        pokojeDoWynajecia = categoryRepository.save(pokojeDoWynajecia);
+        pokojeDoWynajecia = categoriesRepository.save(pokojeDoWynajecia);
 
         CategoryEntity mieszkanieIdomyDoWynajecia = CategoryEntity.builder().name("mieszkania i domy do wynajecia").parent(nieruchomosci).build();
-        mieszkanieIdomyDoWynajecia = categoryRepository.save(mieszkanieIdomyDoWynajecia);
+        mieszkanieIdomyDoWynajecia = categoriesRepository.save(mieszkanieIdomyDoWynajecia);
 
         CategoryEntity mieszkaniaIdomySprzedam = CategoryEntity.builder().name("mieszkania i domy - sprzedam").parent(nieruchomosci).build();
-        mieszkaniaIdomySprzedam = categoryRepository.save(mieszkaniaIdomySprzedam);
+        mieszkaniaIdomySprzedam = categoriesRepository.save(mieszkaniaIdomySprzedam);
 
         nieruchomosci.getChildren().add(pokojeDoWynajecia);
         nieruchomosci.getChildren().add(mieszkanieIdomyDoWynajecia);
@@ -60,21 +61,21 @@ public class MainApp implements ApplicationRunner {
                 .category(mieszkanieIdomyDoWynajecia)
                 .publishDate(LocalDate.now())
                 .content("Wiecie co to jagodzianka? To nie drożdżówka. Myśleliście, że to drożdżówka, a to nie drożdżówka")
-                .build());
+                .build()) ;
     }
 
     private void setUpDomIogrodCategory() {
         CategoryEntity domIogrod = CategoryEntity.builder().name("Dom i Ogród").children(new ArrayList<>()).build();
-        domIogrod = categoryRepository.save(domIogrod);
+        domIogrod = categoriesRepository.save(domIogrod);
 
         CategoryEntity agd = CategoryEntity.builder().name("pokoje do wynajęcia").parent(domIogrod).build();
-        agd = categoryRepository.save(agd);
+        agd = categoriesRepository.save(agd);
 
         CategoryEntity meble = CategoryEntity.builder().name("meble").parent(domIogrod).build();
-        meble = categoryRepository.save(meble);
+        meble = categoriesRepository.save(meble);
 
         CategoryEntity narzedziaImaterialyBudowlane = CategoryEntity.builder().name("narzędzia i materiały budowlane").parent(domIogrod).build();
-        narzedziaImaterialyBudowlane = categoryRepository.save(narzedziaImaterialyBudowlane);
+        narzedziaImaterialyBudowlane = categoriesRepository.save(narzedziaImaterialyBudowlane);
 
         domIogrod.getChildren().add(agd);
         domIogrod.getChildren().add(meble);

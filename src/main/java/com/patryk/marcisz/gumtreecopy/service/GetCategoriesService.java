@@ -4,7 +4,7 @@ import com.patryk.marcisz.gumtreecopy.model.dao.CategoryEntity;
 import com.patryk.marcisz.gumtreecopy.model.dto.categories.main.GetMainCategoriesResponse;
 import com.patryk.marcisz.gumtreecopy.model.dto.categories.main.MainCategoryResponse;
 import com.patryk.marcisz.gumtreecopy.model.dto.categories.main.SubcategoryResponse;
-import com.patryk.marcisz.gumtreecopy.repository.CategoryRepository;
+import com.patryk.marcisz.gumtreecopy.repository.CategoriesRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -19,10 +19,10 @@ import java.util.stream.Collectors;
 @Transactional
 public class GetCategoriesService {
 
-    private final CategoryRepository categoryRepository;
+    private final CategoriesRepository categoriesRepository;
 
     public GetMainCategoriesResponse getMainCategories() {
-        List<CategoryEntity> mainCategories = categoryRepository.getMainCategories();
+        List<CategoryEntity> mainCategories = categoriesRepository.getMainCategories();
         return GetMainCategoriesResponse.builder()
                 .categories(mainCategories.stream()
                         .map(convertCategoryEntityToDto())
@@ -31,7 +31,7 @@ public class GetCategoriesService {
     }
 
     public MainCategoryResponse getSubcategoriesForCategory(String categoryName) {
-        CategoryEntity entity = categoryRepository.findAll().stream()  //nie jest to najwydajniejsze rozwiazanie na swiecie, trzeba bedzie per categoryId chyba ;)
+        CategoryEntity entity = categoriesRepository.findAll().stream()  //nie jest to najwydajniejsze rozwiazanie na swiecie, trzeba bedzie per categoryId chyba ;)
                 .filter(category -> StringUtils.stripAccents(category.getName()).replaceAll("\\s+", "-").toLowerCase().equals(categoryName))
                 .findAny()
                 .orElseThrow(() -> new RuntimeException("category not found"));

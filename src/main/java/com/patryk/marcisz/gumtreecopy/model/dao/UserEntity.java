@@ -3,6 +3,7 @@ package com.patryk.marcisz.gumtreecopy.model.dao;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -19,5 +20,7 @@ public class UserEntity {
 
     private String password;
 
+    @ManyToMany
+    private List<AuthorityEntity> authorities;
 
 }
