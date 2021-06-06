@@ -1,7 +1,9 @@
 package com.patryk.marcisz.gumtreecopy;
 
 import com.patryk.marcisz.gumtreecopy.model.dao.CategoryEntity;
+import com.patryk.marcisz.gumtreecopy.model.dao.OfferEntity;
 import com.patryk.marcisz.gumtreecopy.repository.CategoryRepository;
+import com.patryk.marcisz.gumtreecopy.repository.OffersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -9,6 +11,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 //@EnableGlobalMethodSecurity(
@@ -24,6 +27,7 @@ public class MainApp implements ApplicationRunner {
     }
 
     private final CategoryRepository categoryRepository;
+    private final OffersRepository offersRepository;
 
     @Override
     @Transactional
@@ -48,6 +52,15 @@ public class MainApp implements ApplicationRunner {
         nieruchomosci.getChildren().add(pokojeDoWynajecia);
         nieruchomosci.getChildren().add(mieszkanieIdomyDoWynajecia);
         nieruchomosci.getChildren().add(mieszkaniaIdomySprzedam);
+
+
+        offersRepository.save(OfferEntity.builder()
+                .title("jagodzianka")
+                .price(150)
+                .category(mieszkanieIdomyDoWynajecia)
+                .publishDate(LocalDate.now())
+                .content("Wiecie co to jagodzianka? To nie drożdżówka. Myśleliście, że to drożdżówka, a to nie drożdżówka")
+                .build());
     }
 
     private void setUpDomIogrodCategory() {
