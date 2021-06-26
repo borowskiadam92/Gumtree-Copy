@@ -1,6 +1,8 @@
 package com.patryk.marcisz.gumtreecopy.service;
 
 import com.patryk.marcisz.gumtreecopy.converters.OfferResponseConverter;
+import com.patryk.marcisz.gumtreecopy.exceptions.AppErrorMessage;
+import com.patryk.marcisz.gumtreecopy.exceptions.GumtreeCopyApiException;
 import com.patryk.marcisz.gumtreecopy.model.dao.CategoryEntity;
 import com.patryk.marcisz.gumtreecopy.model.dto.categories.CategoryOffersResponse;
 import com.patryk.marcisz.gumtreecopy.model.dto.categories.main.GetMainCategoriesResponse;
@@ -13,7 +15,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -36,31 +37,32 @@ public class GetCategoriesService {
                 .build();
     }
 
+    public MainCategoryResponse getSubcategoriesForCategory(String categoryName) {
+        CategoryEntity entity = findCategoryByCategoryName(categoryName);
+        return convertCategoryEntityToDto().apply(entity);
+    }
+
     public CategoryOffersResponse getOffersForCategory(String categoryName) {
         ArrayList<CategoryEntity> subCategories = new ArrayList<>();
-        getSubCategories(findCategoryByCategoryName(categoryName), subCategories);
+        CategoryEntity categoryEntity = findCategoryByCategoryName(categoryName);
+        getSubCategories(categoryEntity, subCategories);
         List<OfferResponse> offers = subCategories.stream().flatMap(category -> category.getOffers().stream())
                 .map(offerResponseConverter::toDto)
                 .collect(Collectors.toList());
-        return CategoryOffersResponse.builder().category(categoryName).offers(offers).build();
+        return CategoryOffersResponse.builder().category(categoryEntity.getName()).offers(offers).build();
     }
 
-    public void getSubCategories(CategoryEntity entity, List<CategoryEntity> categories){
+    private void getSubCategories(CategoryEntity entity, List<CategoryEntity> categories){
         categories.add(entity);
         for(CategoryEntity children : entity.getChildren()){
             getSubCategories(children, categories);
         }
     }
 
-    public MainCategoryResponse getSubcategoriesForCategory(String categoryName) {
-        CategoryEntity entity = findCategoryByCategoryName(categoryName);
-        return convertCategoryEntityToDto().apply(entity);
-    }
-
     private CategoryEntity findCategoryByCategoryName(String categoryName) {
         return categoryRepository.findAll().stream()  //nie jest to najwydajniejsze rozwiazanie na swiecie, trzeba bedzie per categoryId chyba ;)
                 .filter(category -> StringUtils.stripAccents(category.getName()).replaceAll("\\s+", "-").toLowerCase().equals(categoryName))
-                .findAny().orElseThrow(() -> new RuntimeException("category not found"));
+                .findAny().orElseThrow(() -> new GumtreeCopyApiException(AppErrorMessage.MISSING_CATEGORY, categoryName));
     }
 
     private Function<CategoryEntity, MainCategoryResponse> convertCategoryEntityToDto() {

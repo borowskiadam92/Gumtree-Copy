@@ -4,13 +4,12 @@ import com.patryk.marcisz.gumtreecopy.model.dao.AuthorityEntity;
 import com.patryk.marcisz.gumtreecopy.model.dao.CategoryEntity;
 import com.patryk.marcisz.gumtreecopy.model.dao.OfferEntity;
 import com.patryk.marcisz.gumtreecopy.model.dao.UserEntity;
-import com.patryk.marcisz.gumtreecopy.repository.AuthoritiesRepository;
+import com.patryk.marcisz.gumtreecopy.repository.AuthorityRepository;
 import com.patryk.marcisz.gumtreecopy.repository.CategoryRepository;
 import com.patryk.marcisz.gumtreecopy.repository.OfferRepository;
-import com.patryk.marcisz.gumtreecopy.repository.UsersRepository;
+import com.patryk.marcisz.gumtreecopy.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,10 +23,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DatabaseRolesProvider implements CommandLineRunner {
 
-    private final AuthoritiesRepository authoritiesRepository;
+    private final AuthorityRepository authorityRepository;
     private final CategoryRepository categoryRepository;
     private final OfferRepository offerRepository;
-    private final UsersRepository usersRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -41,18 +40,18 @@ public class DatabaseRolesProvider implements CommandLineRunner {
     private void createDefaultUsers() {
         AuthorityEntity adminRole = new AuthorityEntity();
         adminRole.setName("ROLE_ADMIN");
-        adminRole = authoritiesRepository.save(adminRole);
+        adminRole = authorityRepository.save(adminRole);
 
         AuthorityEntity userRole = new AuthorityEntity();
         userRole.setName("ROLE_USER");
-        userRole = authoritiesRepository.save(userRole);
+        userRole = authorityRepository.save(userRole);
 
         UserEntity admin = new UserEntity();
         admin.setNick("admin");
         admin.setMail("admin@admin.pl");
         admin.setPassword(passwordEncoder.encode("admin123"));
         admin.setAuthorities(Arrays.asList(adminRole, userRole));
-        usersRepository.save(admin);
+        userRepository.save(admin);
     }
 
     private void setUpNieruchomosciCategory() {
@@ -73,7 +72,7 @@ public class DatabaseRolesProvider implements CommandLineRunner {
         nieruchomosci.getChildren().add(mieszkaniaIdomySprzedam);
 
 
-        UserEntity user = usersRepository.findByMailOrNick("admin").get();
+        UserEntity user = userRepository.findByMailOrNick("admin").get();
         OfferEntity savedOffer = offerRepository.save(OfferEntity.builder()
                 .title("jagodzianka")
                 .price(150)

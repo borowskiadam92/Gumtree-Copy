@@ -5,10 +5,10 @@ import com.patryk.marcisz.gumtreecopy.model.dto.offer.OfferResponse;
 import com.patryk.marcisz.gumtreecopy.service.CreateOfferService;
 import com.patryk.marcisz.gumtreecopy.service.GetOffersService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
-import java.security.Principal;
 
 @RestController
 @RequestMapping(value = "/api/offers")
@@ -24,6 +24,7 @@ public class OffersController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public void createOffer(@RequestBody CreateOfferRequest createOfferRequest){
         createOfferService.createOffer(createOfferRequest);
     }

@@ -2,7 +2,7 @@ package com.patryk.marcisz.gumtreecopy.security;
 
 import com.patryk.marcisz.gumtreecopy.model.dao.AuthorityEntity;
 import com.patryk.marcisz.gumtreecopy.model.dao.UserEntity;
-import com.patryk.marcisz.gumtreecopy.repository.UsersRepository;
+import com.patryk.marcisz.gumtreecopy.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.User;
@@ -22,11 +22,11 @@ import java.util.stream.Collectors;
 @Transactional
 public class CustomUserDetails implements UserDetailsService {
 
-    private final UsersRepository usersRepository;
+    private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity userEntity = usersRepository.findByMailOrNick(username).orElseThrow(() -> new UsernameNotFoundException("user not found"));
+        UserEntity userEntity = userRepository.findByMailOrNick(username).orElseThrow(() -> new UsernameNotFoundException("user not found"));
         List<String> userAuthorities = userEntity.getAuthorities().stream().map(AuthorityEntity::getName).collect(Collectors.toList());
 
         return User.builder()

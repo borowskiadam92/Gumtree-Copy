@@ -1,6 +1,7 @@
 package com.patryk.marcisz.gumtreecopy.controller;
 
 import com.patryk.marcisz.gumtreecopy.model.dto.users.CreateUserRequest;
+import com.patryk.marcisz.gumtreecopy.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
