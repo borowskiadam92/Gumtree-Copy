@@ -29,7 +29,7 @@ public class GetCategoriesService {
     private final OfferResponseConverter offerResponseConverter;
 
     public GetMainCategoriesResponse getMainCategories() {
-        List<CategoryEntity> mainCategories = categoryRepository.getMainCategories();
+        List<CategoryEntity> mainCategories = categoryRepository.findAllByParentIsNull();
         return GetMainCategoriesResponse.builder()
                 .categories(mainCategories.stream()
                         .map(convertCategoryEntityToDto())

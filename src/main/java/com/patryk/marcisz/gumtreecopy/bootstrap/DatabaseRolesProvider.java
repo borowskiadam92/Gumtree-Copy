@@ -94,8 +94,12 @@ public class DatabaseRolesProvider implements CommandLineRunner {
         CategoryEntity agd = CategoryEntity.builder().name("pokoje do wynajęcia").parent(domIogrod).build();
         agd = categoryRepository.save(agd);
 
-        CategoryEntity meble = CategoryEntity.builder().name("meble").parent(domIogrod).build();
+        CategoryEntity meble = CategoryEntity.builder().name("meble").parent(domIogrod).children(new ArrayList<>()).build();
         meble = categoryRepository.save(meble);
+
+        CategoryEntity krzesla = CategoryEntity.builder().name("krzesla").parent(meble).children(new ArrayList<>()).build();
+        krzesla = categoryRepository.save(krzesla);
+        meble.getChildren().add(krzesla);
 
         CategoryEntity narzedziaImaterialyBudowlane = CategoryEntity.builder().name("narzędzia i materiały budowlane").parent(domIogrod).build();
         narzedziaImaterialyBudowlane = categoryRepository.save(narzedziaImaterialyBudowlane);

@@ -61,7 +61,7 @@ class GetCategoriesServiceTest {
 
     @Test
     void shouldReturnMainCategories() {
-        when(categoryRepository.getMainCategories()).thenReturn(categories);
+        when(categoryRepository.findAllByParentIsNull()).thenReturn(categories);
 
         GetMainCategoriesResponse mainCategories = getCategoriesService.getMainCategories();
 

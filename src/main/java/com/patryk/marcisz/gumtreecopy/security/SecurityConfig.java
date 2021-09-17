@@ -26,24 +26,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth.inMemoryAuthentication();
     }
+
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/users").permitAll()
-                .antMatchers(HttpMethod.PUT, "/api/**").authenticated()
-                .antMatchers(HttpMethod.POST, "/api/**").authenticated()
-                .antMatchers(HttpMethod.DELETE, "/api/**").authenticated()
-                .anyRequest().permitAll()
+                    .antMatchers(HttpMethod.POST, "/api/users").permitAll()
+                    .antMatchers(HttpMethod.PUT, "/api/**").authenticated()
+                    .antMatchers(HttpMethod.POST, "/api/**").authenticated()
+                    .antMatchers(HttpMethod.DELETE, "/api/**").authenticated()
+                    .antMatchers(HttpMethod.GET, "/api/users").hasAnyRole("ADMIN")
+                    .anyRequest().permitAll()
                 .and()
-                .headers().frameOptions().sameOrigin()
+                    .headers().frameOptions().sameOrigin()
                 .and()
-                .httpBasic()
+                    .httpBasic()
                 .and()
-                .csrf()
-                .disable();
+                    .formLogin()
+                .and()
+                    .csrf()
+                    .disable();
+        //ROLE_ADMIN
+        //ADMIN
     }
 }
