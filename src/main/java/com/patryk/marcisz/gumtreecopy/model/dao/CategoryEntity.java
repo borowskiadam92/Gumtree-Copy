@@ -22,6 +22,8 @@ public class CategoryEntity {
 
     private String name;
 
+    private String searchableName;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private CategoryEntity parent;
 

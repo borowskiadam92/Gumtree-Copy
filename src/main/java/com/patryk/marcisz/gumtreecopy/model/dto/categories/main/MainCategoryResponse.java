@@ -10,6 +10,7 @@ import java.util.List;
 public class MainCategoryResponse {
 
     private String mainCategoryName;
+    private String searchableName;
     private List<SubcategoryResponse> subcategories;
 
 }

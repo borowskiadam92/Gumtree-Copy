@@ -14,4 +14,6 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> 
     @Query("SELECT cat FROM CategoryEntity cat WHERE cat.parent IS NULL")
     List<CategoryEntity> getMainCategories();
 
+    Optional<CategoryEntity> findBySearchableName(String searchableName);
+
 }
