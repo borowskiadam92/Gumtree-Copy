@@ -55,16 +55,16 @@ public class DatabaseRolesProvider implements CommandLineRunner {
     }
 
     private void setUpNieruchomosciCategory() {
-        CategoryEntity nieruchomosci = CategoryEntity.builder().name("Nieruchomości").children(new ArrayList<>()).build();
+        CategoryEntity nieruchomosci = CategoryEntity.builder().name("Nieruchomości").searchableName("nieruchomosci").children(new ArrayList<>()).build();
         nieruchomosci = categoryRepository.save(nieruchomosci);
 
-        CategoryEntity pokojeDoWynajecia = CategoryEntity.builder().name("pokoje do wynajęcia").parent(nieruchomosci).build();
+        CategoryEntity pokojeDoWynajecia = CategoryEntity.builder().name("pokoje do wynajęcia").searchableName("pokoje-do-wynajecia").parent(nieruchomosci).build();
         pokojeDoWynajecia = categoryRepository.save(pokojeDoWynajecia);
 
-        CategoryEntity mieszkanieIdomyDoWynajecia = CategoryEntity.builder().name("mieszkania i domy do wynajecia").parent(nieruchomosci).build();
+        CategoryEntity mieszkanieIdomyDoWynajecia = CategoryEntity.builder().name("mieszkania i domy do wynajecia").searchableName("mieszkania-i-domy-do-wynajecia").parent(nieruchomosci).build();
         mieszkanieIdomyDoWynajecia = categoryRepository.save(mieszkanieIdomyDoWynajecia);
 
-        CategoryEntity mieszkaniaIdomySprzedam = CategoryEntity.builder().name("mieszkania i domy - sprzedam").parent(nieruchomosci).build();
+        CategoryEntity mieszkaniaIdomySprzedam = CategoryEntity.builder().name("mieszkania i domy - sprzedam").searchableName("mieszkania-i-domy-sprzedam").parent(nieruchomosci).build();
         mieszkaniaIdomySprzedam = categoryRepository.save(mieszkaniaIdomySprzedam);
 
         nieruchomosci.getChildren().add(pokojeDoWynajecia);
@@ -88,20 +88,16 @@ public class DatabaseRolesProvider implements CommandLineRunner {
     }
 
     private void setUpDomIogrodCategory() {
-        CategoryEntity domIogrod = CategoryEntity.builder().name("Dom i Ogród").children(new ArrayList<>()).build();
+        CategoryEntity domIogrod = CategoryEntity.builder().name("Dom i Ogród").searchableName("dom-i-ogrod").children(new ArrayList<>()).build();
         domIogrod = categoryRepository.save(domIogrod);
 
-        CategoryEntity agd = CategoryEntity.builder().name("pokoje do wynajęcia").parent(domIogrod).build();
+        CategoryEntity agd = CategoryEntity.builder().name("agd").searchableName("agd").parent(domIogrod).build();
         agd = categoryRepository.save(agd);
 
-        CategoryEntity meble = CategoryEntity.builder().name("meble").parent(domIogrod).children(new ArrayList<>()).build();
+        CategoryEntity meble = CategoryEntity.builder().name("meble").searchableName("meble").parent(domIogrod).build();
         meble = categoryRepository.save(meble);
 
-        CategoryEntity krzesla = CategoryEntity.builder().name("krzesla").parent(meble).children(new ArrayList<>()).build();
-        krzesla = categoryRepository.save(krzesla);
-        meble.getChildren().add(krzesla);
-
-        CategoryEntity narzedziaImaterialyBudowlane = CategoryEntity.builder().name("narzędzia i materiały budowlane").parent(domIogrod).build();
+        CategoryEntity narzedziaImaterialyBudowlane = CategoryEntity.builder().name("narzędzia i materiały budowlane").searchableName("narzedzia-i-materialy-budowlane").parent(domIogrod).build();
         narzedziaImaterialyBudowlane = categoryRepository.save(narzedziaImaterialyBudowlane);
 
         domIogrod.getChildren().add(agd);

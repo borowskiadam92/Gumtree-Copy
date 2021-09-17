@@ -6,14 +6,12 @@ import com.patryk.marcisz.gumtreecopy.model.dto.categories.main.MainCategoryResp
 import com.patryk.marcisz.gumtreecopy.service.GetCategoriesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/api/categories")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class CategoriesController {
 
     private final GetCategoriesService getCategoriesService;

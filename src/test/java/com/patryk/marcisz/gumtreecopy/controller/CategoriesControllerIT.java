@@ -136,7 +136,7 @@ class CategoriesControllerIT {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/categories/nieruchomosci/offers"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.message", equalTo("Category 'nieruchomosci' not found")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message", equalTo("CategoryWithSubs 'nieruchomosci' not found")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.errorTime", Matchers.notNullValue()))
                 .andDo(MockMvcResultHandlers.print());
     }

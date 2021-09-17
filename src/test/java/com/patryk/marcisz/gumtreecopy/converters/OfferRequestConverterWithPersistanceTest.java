@@ -83,7 +83,7 @@ class OfferRequestConverterWithPersistanceTest {
         GumtreeCopyApiException gumtreeCopyApiException = assertThrows(GumtreeCopyApiException.class,
                 () -> converter.convertAndPersist(request));
         assertEquals(404, gumtreeCopyApiException.getResponseStatus());
-        assertEquals("Category '1' not found", gumtreeCopyApiException.getMessage());
+        assertEquals("CategoryWithSubs '1' not found", gumtreeCopyApiException.getMessage());
     }
 
 }

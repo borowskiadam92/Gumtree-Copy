@@ -13,6 +13,7 @@ import java.math.BigInteger;
 @RestController
 @RequestMapping(value = "/api/offers")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class OffersController {
 
     private final GetOffersService getOffersService;

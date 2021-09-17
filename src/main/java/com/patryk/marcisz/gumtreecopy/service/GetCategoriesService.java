@@ -60,15 +60,18 @@ public class GetCategoriesService {
     }
 
     private CategoryEntity findCategoryByCategoryName(String categoryName) {
-        return categoryRepository.findAll().stream()  //nie jest to najwydajniejsze rozwiazanie na swiecie, trzeba bedzie per categoryId chyba ;)
-                .filter(category -> StringUtils.stripAccents(category.getName()).replaceAll("\\s+", "-").toLowerCase().equals(categoryName))
-                .findAny().orElseThrow(() -> new GumtreeCopyApiException(AppErrorMessage.MISSING_CATEGORY, categoryName));
+//        return categoryRepository.findAll().stream()  //nie jest to najwydajniejsze rozwiazanie na swiecie, trzeba bedzie per categoryId chyba ;)
+//                .filter(category -> StringUtils.stripAccents(category.getName()).replaceAll("\\s+", "-").toLowerCase().equals(categoryName))
+//                .findAny().orElseThrow(() -> new GumtreeCopyApiException(AppErrorMessage.MISSING_CATEGORY, categoryName));
+        System.out.println("catName: " + categoryName);
+        return categoryRepository.findBySearchableName(categoryName).orElseThrow(() -> new GumtreeCopyApiException(AppErrorMessage.MISSING_CATEGORY));
     }
 
     private Function<CategoryEntity, MainCategoryResponse> convertCategoryEntityToDto() {
         return category ->
                 MainCategoryResponse.builder()
                         .mainCategoryName(category.getName())
+                        .searchableName(category.getSearchableName())
                         .subcategories(convertSubcategoryEntityToDto(category))
                         .build();
     }
@@ -76,7 +79,7 @@ public class GetCategoriesService {
     private List<SubcategoryResponse> convertSubcategoryEntityToDto(CategoryEntity category) {
         return category.getChildren()
                 .stream()
-                .map(subcategory -> SubcategoryResponse.builder().subcategoryName(subcategory.getName()).build())
+                .map(subcategory -> SubcategoryResponse.builder().subcategoryName(subcategory.getName()).searchableName(subcategory.getSearchableName()).build())
                 .collect(Collectors.toList());
     }
 
