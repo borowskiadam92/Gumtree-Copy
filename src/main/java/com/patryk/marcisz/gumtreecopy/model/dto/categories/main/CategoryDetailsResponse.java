@@ -7,10 +7,11 @@ import java.util.List;
 
 @Builder
 @Getter
-public class MainCategoryResponse {
+public class CategoryDetailsResponse {
 
-    private String mainCategoryName;
+    private String categoryName;
     private String searchableName;
-    private List<SubcategoryResponse> subcategories;
+    private List<BasicCategoryResponse> subcategories;
+    private List<BasicCategoryResponse> parents;
 
 }

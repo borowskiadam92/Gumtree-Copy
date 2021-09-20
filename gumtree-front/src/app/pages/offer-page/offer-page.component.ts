@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Offer} from "../../shared/model/offer";
-import {OffersService} from "../../service/category-service/offers.service";
+import {OffersService} from "../../service/offers.service";
 
 @Component({
   selector: 'app-offer-page',

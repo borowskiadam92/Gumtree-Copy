@@ -1,14 +1,36 @@
 <div *ngIf="category">
-  <p>{{category.mainCategoryName}}</p>
-  <div *ngFor="let cat of category.subcategories">
-    <p><a [routerLink]="['/', cat.searchableName]">{{cat.subcategoryName}}</a></p>
-    <!--  tu do poprawienia, ciagle poruszamy sie w ramach tego samego komponentu, wiec nie ma realnego przeladowania, snapshot routing nie wystarczy -->
-  </div>
-
-  <p>Oferty</p>
-  <div *ngFor="let offer of offers" [routerLink]="['/', category.searchableName, 'Krakow', offer.title, offer.id]">
-    <p>{{offer.title}}</p>
-    <p>Cena: {{offer.title}}</p>
-    <p>Data publikacji: {{offer.publishDate}}</p>
+  <ul>
+    <li *ngFor="let cat of category.parents"><p><a [routerLink]="['/', cat.searchableName]">{{cat.name}}</a></p></li>
+    <ul>
+      <li><p>{{category.categoryName}}</p></li>
+      <ul>
+        <li *ngFor="let cat of category.subcategories">
+          <p><a [routerLink]="['/', cat.searchableName]">{{cat.name}}</a></p>
+        </li>
+      </ul>
+    </ul>
+  </ul>
+  <div>
+    <p>Oferty</p>
+    <div *ngFor="let offer of offers" [routerLink]="['/', category.searchableName, 'Krakow', offer.title, offer.id]">
+      <p>{{offer.title}}</p>
+      <p>Cena: {{offer.price}}</p>
+      <p>Data publikacji: {{offer.publishDate}}</p>
+    </div>
   </div>
 </div>
+<!--  <div *ngFor="let cat of category.parents">-->
+<!--    <p><a [routerLink]="['/', cat.searchableName]">{{cat.name}}</a></p>-->
+<!--  </div>-->
+<!--  <p>{{category.categoryName}}</p>-->
+<!--  <div *ngFor="let cat of category.subcategories">-->
+<!--    <p><a [routerLink]="['/', cat.searchableName]">{{cat.name}}</a></p>-->
+<!--  </div>-->
+
+<!--  <p>Oferty</p>-->
+<!--  <div *ngFor="let offer of offers" [routerLink]="['/', category.searchableName, 'Krakow', offer.title, offer.id]">-->
+<!--    <p>{{offer.title}}</p>-->
+<!--    <p>Cena: {{offer.title}}</p>-->
+<!--    <p>Data publikacji: {{offer.publishDate}}</p>-->
+<!--  </div>-->
+<!--</div>-->

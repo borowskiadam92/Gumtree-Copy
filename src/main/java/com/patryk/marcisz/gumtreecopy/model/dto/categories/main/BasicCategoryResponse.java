@@ -5,9 +5,9 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class SubcategoryResponse {
+public class BasicCategoryResponse {
 
-    private String subcategoryName;
+    private String name;
     private String searchableName;
 
 }

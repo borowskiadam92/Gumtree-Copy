@@ -2,6 +2,7 @@ package com.patryk.marcisz.gumtreecopy.service;
 
 import com.patryk.marcisz.gumtreecopy.exceptions.AppErrorMessage;
 import com.patryk.marcisz.gumtreecopy.exceptions.GumtreeCopyApiException;
+import com.patryk.marcisz.gumtreecopy.model.UserResponse;
 import com.patryk.marcisz.gumtreecopy.model.dao.UserEntity;
 import com.patryk.marcisz.gumtreecopy.model.dto.users.CreateUserRequest;
 import com.patryk.marcisz.gumtreecopy.repository.AuthorityRepository;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +24,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public void createUser(CreateUserRequest request) {
-        userRepository.findByMailOrNick(request.getMail(), request.getNick()).ifPresent((x) -> {
+        userRepository.findByMailOrNick(request.getMail()).ifPresent((x) -> {
             throw new GumtreeCopyApiException(AppErrorMessage.USER_EXIST);
         });
 
@@ -35,4 +37,7 @@ public class UserService {
         userRepository.save(convertDtoToDao.apply(request));
     }
 
+    public List<UserResponse> getAllUsers() {
+        return userRepository.findAll().stream().map(entity -> UserResponse.builder().mail(entity.getMail()).nick(entity.getNick()).build()).collect(Collectors.toList());
+    }
 }

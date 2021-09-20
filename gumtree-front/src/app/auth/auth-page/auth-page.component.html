@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-xs-12 col-md-6 col-md-offset-3">
+    <div *ngIf="errorMessage" class="alert alert-danger"><p>{{errorMessage}}</p></div>
+    <form [formGroup]="authFormGroup" *ngIf="!isLoading">
+      <div class="form-group">
+        <label for="mail">Adres e-mail</label>
+        <input type="text" id="mail" formControlName="mail" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="password">Hasło</label>
+        <input type="password" id="password" formControlName="password" class="form-control">
+      </div>
+      <div>
+        <button class="btn btn-primary" (click)="login()">Zaloguj się</button> |
+        <button class="btn btn-warning" (click)="registerUser()">Zarejestruj</button>
+      </div>
+    </form>
+    <app-loading-indicator [isLoading]="isLoading"></app-loading-indicator>
+  </div>
+</div>

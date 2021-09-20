@@ -9,6 +9,6 @@ import java.util.List;
 @Getter
 public class GetMainCategoriesResponse {
 
-    private List<MainCategoryResponse> categories;
+    private List<CategoryDetailsResponse> categories;
 
 }

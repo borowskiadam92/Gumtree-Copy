@@ -4,8 +4,8 @@ import com.patryk.marcisz.gumtreecopy.exceptions.AppErrorMessage;
 import com.patryk.marcisz.gumtreecopy.exceptions.GumtreeCopyApiException;
 import com.patryk.marcisz.gumtreecopy.model.dto.categories.CategoryOffersResponse;
 import com.patryk.marcisz.gumtreecopy.model.dto.categories.main.GetMainCategoriesResponse;
-import com.patryk.marcisz.gumtreecopy.model.dto.categories.main.MainCategoryResponse;
-import com.patryk.marcisz.gumtreecopy.model.dto.categories.main.SubcategoryResponse;
+import com.patryk.marcisz.gumtreecopy.model.dto.categories.main.CategoryDetailsResponse;
+import com.patryk.marcisz.gumtreecopy.model.dto.categories.main.BasicCategoryResponse;
 import com.patryk.marcisz.gumtreecopy.model.dto.offer.OfferResponse;
 import com.patryk.marcisz.gumtreecopy.service.GetCategoriesService;
 import org.hamcrest.Matchers;
@@ -45,20 +45,20 @@ class CategoriesControllerIT {
         when(getCategoriesService.getMainCategories()).thenReturn(
                 GetMainCategoriesResponse.builder()
                         .categories(List.of(
-                                MainCategoryResponse.builder()
-                                        .mainCategoryName("category_1")
+                                CategoryDetailsResponse.builder()
+                                        .categoryName("category_1")
                                         .subcategories(List.of(
-                                                SubcategoryResponse.builder().subcategoryName("subcat_1_1").build(),
-                                                SubcategoryResponse.builder().subcategoryName("subcat_1_2").build(),
-                                                SubcategoryResponse.builder().subcategoryName("subcat_1_3").build()
+                                                BasicCategoryResponse.builder().name("subcat_1_1").build(),
+                                                BasicCategoryResponse.builder().name("subcat_1_2").build(),
+                                                BasicCategoryResponse.builder().name("subcat_1_3").build()
                                         ))
                                         .build(),
-                                MainCategoryResponse.builder()
-                                        .mainCategoryName("category_2")
+                                CategoryDetailsResponse.builder()
+                                        .categoryName("category_2")
                                         .subcategories(List.of(
-                                                SubcategoryResponse.builder().subcategoryName("subcat_2_1").build(),
-                                                SubcategoryResponse.builder().subcategoryName("subcat_2_2").build(),
-                                                SubcategoryResponse.builder().subcategoryName("subcat_2_3").build()
+                                                BasicCategoryResponse.builder().name("subcat_2_1").build(),
+                                                BasicCategoryResponse.builder().name("subcat_2_2").build(),
+                                                BasicCategoryResponse.builder().name("subcat_2_3").build()
                                         ))
                                         .build()
                         )).build());
@@ -82,12 +82,12 @@ class CategoriesControllerIT {
     @Test
     void shouldReturnSubcategoriesForSpecifiedCategory() throws Exception {
         when(getCategoriesService.getSubcategoriesForCategory("nieruchomosci"))
-                .thenReturn(MainCategoryResponse.builder()
-                        .mainCategoryName("Nieruchomości")
+                .thenReturn(CategoryDetailsResponse.builder()
+                        .categoryName("Nieruchomości")
                         .subcategories(List.of(
-                                SubcategoryResponse.builder().subcategoryName("Wynajem").build(),
-                                SubcategoryResponse.builder().subcategoryName("Zakup").build(),
-                                SubcategoryResponse.builder().subcategoryName("Sprzedaż").build()))
+                                BasicCategoryResponse.builder().name("Wynajem").build(),
+                                BasicCategoryResponse.builder().name("Zakup").build(),
+                                BasicCategoryResponse.builder().name("Sprzedaż").build()))
                         .build());
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/categories/nieruchomosci"))

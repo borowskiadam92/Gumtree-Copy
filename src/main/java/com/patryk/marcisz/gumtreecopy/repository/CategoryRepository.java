@@ -13,8 +13,8 @@ import java.util.Optional;
 @Repository
 public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> {
 
-    @Query("SELECT cat FROM CategoryEntity cat WHERE cat.parent IS NULL")
-    List<CategoryEntity> findAllByParentIsNull();
+    @Query("SELECT cat FROM CategoryEntity cat WHERE cat.parent.searchableName like 'wszystkie-kategorie'")
+    List<CategoryEntity> findAllChildrenOfMainCategory();
 
     Optional<CategoryEntity> findBySearchableName(String searchableName);
 

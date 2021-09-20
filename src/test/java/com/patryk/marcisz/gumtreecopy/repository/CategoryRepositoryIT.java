@@ -30,7 +30,7 @@ class CategoryRepositoryIT {
         Object startCount = entityManager.createNativeQuery(countQuery).getSingleResult();
         assertEquals(BigInteger.valueOf(3), startCount);
 
-        List<CategoryEntity> categories = categoryRepository.findAllByParentIsNull();
+        List<CategoryEntity> categories = categoryRepository.findAllChildrenOfMainCategory();
         assertEquals(1, categories.size());
         assertEquals("Nieruchomości", categories.get(0).getName());
         assertEquals(1000, categories.get(0).getId());

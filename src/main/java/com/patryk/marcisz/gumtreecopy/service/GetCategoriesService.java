@@ -6,17 +6,18 @@ import com.patryk.marcisz.gumtreecopy.exceptions.GumtreeCopyApiException;
 import com.patryk.marcisz.gumtreecopy.model.dao.CategoryEntity;
 import com.patryk.marcisz.gumtreecopy.model.dto.categories.CategoryOffersResponse;
 import com.patryk.marcisz.gumtreecopy.model.dto.categories.main.GetMainCategoriesResponse;
-import com.patryk.marcisz.gumtreecopy.model.dto.categories.main.MainCategoryResponse;
-import com.patryk.marcisz.gumtreecopy.model.dto.categories.main.SubcategoryResponse;
+import com.patryk.marcisz.gumtreecopy.model.dto.categories.main.CategoryDetailsResponse;
+import com.patryk.marcisz.gumtreecopy.model.dto.categories.main.BasicCategoryResponse;
 import com.patryk.marcisz.gumtreecopy.model.dto.offer.OfferResponse;
 import com.patryk.marcisz.gumtreecopy.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -29,7 +30,7 @@ public class GetCategoriesService {
     private final OfferResponseConverter offerResponseConverter;
 
     public GetMainCategoriesResponse getMainCategories() {
-        List<CategoryEntity> mainCategories = categoryRepository.findAllByParentIsNull();
+        List<CategoryEntity> mainCategories = categoryRepository.findAllChildrenOfMainCategory();
         return GetMainCategoriesResponse.builder()
                 .categories(mainCategories.stream()
                         .map(convertCategoryEntityToDto())
@@ -37,7 +38,7 @@ public class GetCategoriesService {
                 .build();
     }
 
-    public MainCategoryResponse getSubcategoriesForCategory(String categoryName) {
+    public CategoryDetailsResponse getSubcategoriesForCategory(String categoryName) {
         CategoryEntity entity = findCategoryByCategoryName(categoryName);
         return convertCategoryEntityToDto().apply(entity);
     }
@@ -63,24 +64,45 @@ public class GetCategoriesService {
 //        return categoryRepository.findAll().stream()  //nie jest to najwydajniejsze rozwiazanie na swiecie, trzeba bedzie per categoryId chyba ;)
 //                .filter(category -> StringUtils.stripAccents(category.getName()).replaceAll("\\s+", "-").toLowerCase().equals(categoryName))
 //                .findAny().orElseThrow(() -> new GumtreeCopyApiException(AppErrorMessage.MISSING_CATEGORY, categoryName));
-        System.out.println("catName: " + categoryName);
-        return categoryRepository.findBySearchableName(categoryName).orElseThrow(() -> new GumtreeCopyApiException(AppErrorMessage.MISSING_CATEGORY));
+        return categoryRepository.findBySearchableName(categoryName).orElseThrow(() -> new GumtreeCopyApiException(AppErrorMessage.MISSING_CATEGORY, categoryName));
     }
 
-    private Function<CategoryEntity, MainCategoryResponse> convertCategoryEntityToDto() {
+    private Function<CategoryEntity, CategoryDetailsResponse> convertCategoryEntityToDto() {
         return category ->
-                MainCategoryResponse.builder()
-                        .mainCategoryName(category.getName())
+                CategoryDetailsResponse.builder()
+                        .categoryName(category.getName())
                         .searchableName(category.getSearchableName())
                         .subcategories(convertSubcategoryEntityToDto(category))
+                        .parents(findParentCategories(category.getParent()))
                         .build();
     }
 
-    private List<SubcategoryResponse> convertSubcategoryEntityToDto(CategoryEntity category) {
+    private List<BasicCategoryResponse> findParentCategories(CategoryEntity category) {
+        List<CategoryEntity> parentEntities = new ArrayList<>();
+        findParents(category, parentEntities);
+        List<BasicCategoryResponse> parents = parentEntities.stream()
+                .map(this::convertToSimpleCategory)
+                .collect(Collectors.toList());
+        Collections.reverse(parents);
+        return parents;
+    }
+
+    private void findParents(CategoryEntity entity, List<CategoryEntity> parents){
+        if(Objects.nonNull(entity)){
+            parents.add(entity);
+            findParents(entity.getParent(), parents);
+        }
+    }
+
+    private List<BasicCategoryResponse> convertSubcategoryEntityToDto(CategoryEntity category) {
         return category.getChildren()
                 .stream()
-                .map(subcategory -> SubcategoryResponse.builder().subcategoryName(subcategory.getName()).searchableName(subcategory.getSearchableName()).build())
+                .map(this::convertToSimpleCategory)
                 .collect(Collectors.toList());
+    }
+
+    private BasicCategoryResponse convertToSimpleCategory(CategoryEntity subcategory) {
+        return BasicCategoryResponse.builder().name(subcategory.getName()).searchableName(subcategory.getSearchableName()).build();
     }
 
 

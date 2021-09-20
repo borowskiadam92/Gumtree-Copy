@@ -33,8 +33,11 @@ public class DatabaseRolesProvider implements CommandLineRunner {
     @Transactional
     public void run(String[] args) {
         createDefaultUsers();
-        setUpNieruchomosciCategory();
-        setUpDomIogrodCategory();
+
+        CategoryEntity mainCategory = categoryRepository.save(CategoryEntity.builder().parent(null).children(new ArrayList<>()).searchableName("wszystkie-kategorie").name("Wszystkie kategorie").build());
+
+        setUpNieruchomosciCategory(mainCategory);
+        setUpDomIogrodCategory(mainCategory);
     }
 
     private void createDefaultUsers() {
@@ -54,7 +57,8 @@ public class DatabaseRolesProvider implements CommandLineRunner {
         userRepository.save(admin);
     }
 
-    private void setUpNieruchomosciCategory() {
+    private void setUpNieruchomosciCategory(CategoryEntity mainCategory) {
+
         CategoryEntity nieruchomosci = CategoryEntity.builder().name("Nieruchomości").searchableName("nieruchomosci").children(new ArrayList<>()).build();
         nieruchomosci = categoryRepository.save(nieruchomosci);
 
@@ -71,7 +75,6 @@ public class DatabaseRolesProvider implements CommandLineRunner {
         nieruchomosci.getChildren().add(mieszkanieIdomyDoWynajecia);
         nieruchomosci.getChildren().add(mieszkaniaIdomySprzedam);
 
-
         UserEntity user = userRepository.findByMailOrNick("admin").get();
         OfferEntity savedOffer = offerRepository.save(OfferEntity.builder()
                 .title("jagodzianka")
@@ -85,16 +88,19 @@ public class DatabaseRolesProvider implements CommandLineRunner {
 
         user.setOffers(List.of(savedOffer));
         mieszkanieIdomyDoWynajecia.setOffers(List.of(savedOffer));
+
+        mainCategory.getChildren().add(nieruchomosci);
+        nieruchomosci.setParent(mainCategory);
     }
 
-    private void setUpDomIogrodCategory() {
-        CategoryEntity domIogrod = CategoryEntity.builder().name("Dom i Ogród").searchableName("dom-i-ogrod").children(new ArrayList<>()).build();
+    private void setUpDomIogrodCategory(CategoryEntity mainCategory) {
+        CategoryEntity domIogrod = CategoryEntity.builder().name("Dom i Ogród").searchableName("dom-i-ogrod").children(new ArrayList<>()).parent(mainCategory).build();
         domIogrod = categoryRepository.save(domIogrod);
 
         CategoryEntity agd = CategoryEntity.builder().name("agd").searchableName("agd").parent(domIogrod).build();
         agd = categoryRepository.save(agd);
 
-        CategoryEntity meble = CategoryEntity.builder().name("meble").searchableName("meble").parent(domIogrod).build();
+        CategoryEntity meble = CategoryEntity.builder().name("meble").searchableName("meble").parent(domIogrod).children(new ArrayList<>()).build();
         meble = categoryRepository.save(meble);
 
         CategoryEntity narzedziaImaterialyBudowlane = CategoryEntity.builder().name("narzędzia i materiały budowlane").searchableName("narzedzia-i-materialy-budowlane").parent(domIogrod).build();
@@ -103,6 +109,13 @@ public class DatabaseRolesProvider implements CommandLineRunner {
         domIogrod.getChildren().add(agd);
         domIogrod.getChildren().add(meble);
         domIogrod.getChildren().add(narzedziaImaterialyBudowlane);
+
+        CategoryEntity szafy = CategoryEntity.builder().name("szafy, komody, regały").searchableName("szafy-komody-regaly").parent(meble).build();
+        categoryRepository.save(szafy);
+
+        meble.getChildren().add(szafy);
+
+        mainCategory.getChildren().add(domIogrod);
 
     }
 

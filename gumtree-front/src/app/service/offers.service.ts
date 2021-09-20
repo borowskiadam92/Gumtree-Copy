@@ -1,8 +1,8 @@
 import {Injectable, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Category} from "../../shared/model/category/category";
+import {Category} from "../shared/model/category/category";
 import {Observable} from "rxjs";
-import {Offer} from "../../shared/model/offer";
+import {Offer} from "../shared/model/offer";
 
 @Injectable({providedIn: "root"})
 export class OffersService implements OnInit {

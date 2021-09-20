@@ -7,7 +7,7 @@ import com.patryk.marcisz.gumtreecopy.model.dao.OfferEntity;
 import com.patryk.marcisz.gumtreecopy.model.dao.UserEntity;
 import com.patryk.marcisz.gumtreecopy.model.dto.categories.CategoryOffersResponse;
 import com.patryk.marcisz.gumtreecopy.model.dto.categories.main.GetMainCategoriesResponse;
-import com.patryk.marcisz.gumtreecopy.model.dto.categories.main.MainCategoryResponse;
+import com.patryk.marcisz.gumtreecopy.model.dto.categories.main.CategoryDetailsResponse;
 import com.patryk.marcisz.gumtreecopy.repository.CategoryRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -61,16 +61,16 @@ class GetCategoriesServiceTest {
 
     @Test
     void shouldReturnMainCategories() {
-        when(categoryRepository.findAllByParentIsNull()).thenReturn(categories);
+        when(categoryRepository.findAllChildrenOfMainCategory()).thenReturn(categories);
 
         GetMainCategoriesResponse mainCategories = getCategoriesService.getMainCategories();
 
         assertEquals(3, mainCategories.getCategories().size());
-        assertEquals("Nieruchomości", mainCategories.getCategories().get(0).getMainCategoryName());
-        assertEquals("Wynajem", mainCategories.getCategories().get(0).getSubcategories().get(0).getSubcategoryName());
-        assertEquals("Sprzedaż", mainCategories.getCategories().get(0).getSubcategories().get(1).getSubcategoryName());
-        assertEquals("AGD/RTV", mainCategories.getCategories().get(1).getMainCategoryName());
-        assertEquals("Elektronika", mainCategories.getCategories().get(2).getMainCategoryName());
+        assertEquals("Nieruchomości", mainCategories.getCategories().get(0).getCategoryName());
+        assertEquals("Wynajem", mainCategories.getCategories().get(0).getSubcategories().get(0).getName());
+        assertEquals("Sprzedaż", mainCategories.getCategories().get(0).getSubcategories().get(1).getName());
+        assertEquals("AGD/RTV", mainCategories.getCategories().get(1).getCategoryName());
+        assertEquals("Elektronika", mainCategories.getCategories().get(2).getCategoryName());
     }
 
     @Test
@@ -83,12 +83,12 @@ class GetCategoriesServiceTest {
                 .build();
 
         when(categoryRepository.findAll()).thenReturn(Collections.singletonList(categories));
-        MainCategoryResponse subcategories = getCategoriesService.getSubcategoriesForCategory("nieruchomosci");
+        CategoryDetailsResponse subcategories = getCategoriesService.getSubcategoriesForCategory("nieruchomosci");
 
-        assertEquals("Nieruchomości", subcategories.getMainCategoryName());
+        assertEquals("Nieruchomości", subcategories.getCategoryName());
         assertEquals(2, subcategories.getSubcategories().size());
-        assertEquals("Wynajem", subcategories.getSubcategories().get(0).getSubcategoryName());
-        assertEquals("Sprzedaż", subcategories.getSubcategories().get(1).getSubcategoryName());
+        assertEquals("Wynajem", subcategories.getSubcategories().get(0).getName());
+        assertEquals("Sprzedaż", subcategories.getSubcategories().get(1).getName());
     }
 
     @Test

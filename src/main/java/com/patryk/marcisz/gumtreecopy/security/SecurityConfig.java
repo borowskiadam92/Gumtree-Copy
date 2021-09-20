@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication();
+        auth.userDetailsService(userDetailsService);
     }
 
 
@@ -38,6 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
         http
                 .authorizeRequests()
                     .antMatchers(HttpMethod.POST, "/api/users").permitAll()
+                    .antMatchers(HttpMethod.POST, "/login").permitAll()
                     .antMatchers(HttpMethod.PUT, "/api/**").authenticated()
                     .antMatchers(HttpMethod.POST, "/api/**").authenticated()
                     .antMatchers(HttpMethod.DELETE, "/api/**").authenticated()
@@ -47,8 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                     .headers().frameOptions().sameOrigin()
                 .and()
                     .httpBasic()
-                .and()
-                    .formLogin()
+                //.and()
+                //    .formLogin()
                 .and()
                     .csrf()
                     .disable();

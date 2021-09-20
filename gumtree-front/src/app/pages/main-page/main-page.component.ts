@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {CategoryService} from "../../service/category-service/category.service";
+import {CategoryService} from "../../service/category.service";
 import {Category} from "../../shared/model/category/category";
 
 @Component({
@@ -13,6 +13,7 @@ export class MainPageComponent implements OnInit {
   constructor(private categoryService: CategoryService) { }
 
   ngOnInit(): void {
+    console.log('on init mainpage');
     this.categoryService.downloadMainCategories().subscribe(response => {
       console.log(response);
       this.categories = response.categories;

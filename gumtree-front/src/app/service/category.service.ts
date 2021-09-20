@@ -1,8 +1,8 @@
 import {Injectable, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Category} from "../../shared/model/category/category";
+import {Category} from "../shared/model/category/category";
 import {Observable} from "rxjs";
-import {Offer} from "../../shared/model/offer";
+import {Offer} from "../shared/model/offer";
 
 @Injectable({providedIn: "root"})
 export class CategoryService implements OnInit {
@@ -15,6 +15,7 @@ export class CategoryService implements OnInit {
   }
 
   downloadMainCategories(): Observable<{ categories:Category[] }> {
+    console.log('calling main categories');
     return this.http.get<{ categories:Category[] }>(this.server + "/api/categories", {responseType: "json"});
   }
 

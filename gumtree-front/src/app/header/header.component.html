@@ -13,9 +13,9 @@
       <!--      </ul>-->
       <ul class="nav navbar-nav navbar-right">
         <li appDropdown class="dropdown">
-          <a href="#" class="dropdown-toggle" role="button">Zarządzaj<span class="caret"></span></a>
+          <a class="dropdown-toggle" role="button">Zarządzaj<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Zaloguj się</a></li>
+            <li><a [routerLink]="['login']">Zaloguj się</a></li>
             <li><a href="#">Dodaj ogłoszenie</a></li>
           </ul>
         </li>

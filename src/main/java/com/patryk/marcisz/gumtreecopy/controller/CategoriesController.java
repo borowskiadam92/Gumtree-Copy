@@ -2,7 +2,7 @@ package com.patryk.marcisz.gumtreecopy.controller;
 
 import com.patryk.marcisz.gumtreecopy.model.dto.categories.CategoryOffersResponse;
 import com.patryk.marcisz.gumtreecopy.model.dto.categories.main.GetMainCategoriesResponse;
-import com.patryk.marcisz.gumtreecopy.model.dto.categories.main.MainCategoryResponse;
+import com.patryk.marcisz.gumtreecopy.model.dto.categories.main.CategoryDetailsResponse;
 import com.patryk.marcisz.gumtreecopy.service.GetCategoriesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -22,7 +22,7 @@ public class CategoriesController {
     }
 
     @GetMapping(value = "/{categoryName}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public MainCategoryResponse getSubcategoriesForCategory(@PathVariable String categoryName){
+    public CategoryDetailsResponse getSubcategoriesForCategory(@PathVariable String categoryName){
         return getCategoriesService.getSubcategoriesForCategory(categoryName);
     }
 

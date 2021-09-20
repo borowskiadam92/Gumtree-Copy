@@ -1,7 +1,8 @@
-<p class="font-weight-bold"><a [routerLink]="['/', category.searchableName]">{{category.mainCategoryName}}</a></p>
+<p class="font-weight-bold"><a [routerLink]="['/', category.searchableName]">{{category.categoryName}}</a></p>
 <div *ngFor="let subcat of category.subcategories">
   <div>
-    <p class="font-italic"><a [routerLink]="['/', subcat.searchableName]">{{subcat.subcategoryName}}</a></p>
+    <p class="font-italic"><a [routerLink]="['/', subcat.searchableName]">{{subcat.name}}</a></p>
   </div>
-  <hr>
 </div>
+<hr>
+
