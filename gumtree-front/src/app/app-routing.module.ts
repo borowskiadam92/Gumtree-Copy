@@ -5,6 +5,7 @@ import {CategoryPageComponent} from "./pages/category-page/category-page.compone
 import {OfferPageComponent} from "./pages/offer-page/offer-page.component";
 import {RegisterPageComponent} from "./pages/register-page/register-page.component";
 import {AuthPageComponent} from "./auth/auth-page/auth-page.component";
+import {EditOfferPageComponent} from "./pages/offer-page/edit-offer/edit-offer-page.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/main-page', pathMatch: 'full'},
@@ -12,6 +13,9 @@ const routes: Routes = [
   {path: 'login', component: AuthPageComponent},
   {path: 'register-user', component: RegisterPageComponent},
   {path: 'wszystkie-ogloszenia', component: CategoryPageComponent},
+  {path: 'create-offer', component: EditOfferPageComponent},
+  {path: 'edit-offer/:offerId', component: EditOfferPageComponent},
+  {path: 'offers/:offerId', component: OfferPageComponent },
   {path: ':category', component: CategoryPageComponent},
   {path: ':category/:localization', component: CategoryPageComponent},
   {path: ':category/:localization/:title/:id', component: OfferPageComponent}];

@@ -42,7 +42,6 @@ class UserServiceTest {
 
     private final CreateUserRequest createUserRequest = CreateUserRequest.builder()
             .mail("user@user.pl")
-            .nick("user123")
             .password("password123")
             .build();
 

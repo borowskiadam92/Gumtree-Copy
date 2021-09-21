@@ -21,6 +21,7 @@ public class OfferResponseConverter implements Converter<OfferEntity, OfferRespo
                 .categoryId(offerEntity.getCategory().getId())
                 .publishDate(offerEntity.getPublishDate().format(DateTimeFormatter.BASIC_ISO_DATE))
                 .content(offerEntity.getContent())
+                .localization(offerEntity.getLocalization().getSearchableName())
                 .build();
     }
 

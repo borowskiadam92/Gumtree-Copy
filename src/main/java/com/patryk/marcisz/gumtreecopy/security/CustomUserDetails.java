@@ -35,6 +35,7 @@ public class CustomUserDetails implements UserDetailsService {
                 .username(userEntity.getMail())
                 .password(userEntity.getPassword())
                 .authorities(userAuthorities.toArray(String[]::new))
+                .accountLocked(!userEntity.isActive())
                 .build();
     }
 }

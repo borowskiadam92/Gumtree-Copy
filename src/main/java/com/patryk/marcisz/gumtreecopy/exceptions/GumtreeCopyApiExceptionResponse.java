@@ -1,7 +1,5 @@
 package com.patryk.marcisz.gumtreecopy.exceptions;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;

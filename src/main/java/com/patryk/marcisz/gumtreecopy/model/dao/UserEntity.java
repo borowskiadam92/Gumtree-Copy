@@ -28,6 +28,8 @@ public class UserEntity {
 
     private String password;
 
+    private boolean active;
+
     @ManyToMany
     private List<AuthorityEntity> authorities;
 

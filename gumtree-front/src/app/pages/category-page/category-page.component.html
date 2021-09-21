@@ -12,7 +12,7 @@
   </ul>
   <div>
     <p>Oferty</p>
-    <div *ngFor="let offer of offers" [routerLink]="['/', category.searchableName, 'Krakow', offer.title, offer.id]">
+    <div *ngFor="let offer of offers" [routerLink]="['/', category.searchableName, offer.localization, offer.title, offer.id]">
       <p>{{offer.title}}</p>
       <p>Cena: {{offer.price}}</p>
       <p>Data publikacji: {{offer.publishDate}}</p>

@@ -1,0 +1,26 @@
+<div class="center-block">
+  <form [formGroup]="editOfferFormGroup" (ngSubmit)="onSubmit()">
+    <div formGroupName="offerData">
+      <!--    title -->
+      <label for="title">Tytuł</label>
+      <input type="text" id="title" formControlName="title" class="form-control">
+      <span
+        *ngIf="!editOfferFormGroup.get('offerData.title').valid && editOfferFormGroup.get('offerData.title').touched"
+        class="help-block">
+      <span *ngIf="editOfferFormGroup.get('offerData.title').errors['required']">Pole tytuł jest wymagane!</span>
+      </span>
+      <!--    price-->n
+      <label for="price">Cena</label>
+      <input type="number" id="price" formControlName="price" class="form-control">
+      <!--    publishDate-->
+      <label for="publishDate">Data publikacji</label>
+      <input type="date" id="publishDate" formControlName="publishDate" class="form-control" [disabled]="true">
+      <!--    content-->
+      <label for="content">Treść ogłoszenia</label>
+      <textarea type="text" id="content" formControlName="content" class="form-control"></textarea>
+
+      <button class="btn btn-primary" type="submit">Wyślij</button>
+    </div>
+
+  </form>
+</div>

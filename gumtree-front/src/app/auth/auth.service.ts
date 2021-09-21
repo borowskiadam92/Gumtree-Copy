@@ -1,48 +1,56 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, Observable, Subject, throwError} from "rxjs";
-import {catchError, tap} from "rxjs/operators";
-import {User} from "./user.model";
+import {Router} from "@angular/router";
+import {Observable} from "rxjs";
+import {tap} from "rxjs/operators";
+
+export type User = { email: string, password: string, nick: string };
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  user = new BehaviorSubject<User>(null);
+  currentUser: User;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private router: Router) {
+    this.currentUser = JSON.parse(localStorage.getItem('userData'));
   }
 
-  createNewUser(userData: { login: string, password: string }): Observable<any> {
-    return this.httpClient.post('http://localhost:8080/api/users', userData)
-      .pipe(catchError(errorRes => {
-        let errorMessage = "Wystąpił nieoczekiwany błąd";
-        if (errorRes.message) {
-          errorMessage = errorRes.message;
-        }
-        return throwError(errorMessage);
-      }), tap(res => this.handleAuthentication(userData.login, userData.password)))
+  public login(mail: string, password: string): Observable<any> {
+    localStorage.removeItem('userData');
+    this.currentUser = null;
+
+    return this.httpClient.get<any>(
+      "http://localhost:8080/api/current-user",
+      {
+        headers: {'Authorization': 'Basic ' + btoa(mail + ":" + password)}
+      }
+    ).pipe(tap<any>(response => {
+      this.currentUser = {email: mail, password: password, nick: response.nick}
+      localStorage.setItem('userData', JSON.stringify(this.currentUser));
+    }))
   }
 
-  login(login: any, password: any) {
-    return this.httpClient.get("http://localhost:8080/api/current-user", {headers: {'Authorization': 'Basic ' + btoa(login + ":" + password)}})
-      .subscribe(res => this.handleAuthentication(login, password));
-
-      // .pipe(tap(res => {
-      //   console.log(res);
-      //   this.handleAuthentication(login, password);
-      // }))
+  createNewUser(newUserData: any) {
+    return this.httpClient.post<any>(
+      "http://localhost:8080/api/users",
+      newUserData
+    );
   }
 
-  getUsers(){
-    console.log('get users');
-    this.httpClient.get('http://localhost:8080/api/users').subscribe(res => console.log(res));
+  logout(): void {
+    this.currentUser = null;
+    localStorage.removeItem('userData');
   }
 
-  private handleAuthentication(login: string, password: string){
-    let user = new User(login, login, btoa(login + ":" + password));
-    console.log(this.user);
-    localStorage.setItem('userData', JSON.stringify(user));
+  isLoggedUser(): boolean {
+    return !!this.currentUser;
   }
+
+  getBasicAuthToken() {
+    return btoa(this.currentUser.email + ":" + this.currentUser.password);
+  }
+
+
 }

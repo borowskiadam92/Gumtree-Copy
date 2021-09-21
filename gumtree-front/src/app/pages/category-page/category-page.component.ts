@@ -23,7 +23,6 @@ export class CategoryPageComponent implements OnInit {
       this.categoryService.downloadSubcategories(categoryName).subscribe(response => this.category = response);
       this.categoryService.downloadOffersForCategory(categoryName).subscribe(response => this.offers = response.offers);
     });
-    this.authService.getUsers();
   }
 
 }

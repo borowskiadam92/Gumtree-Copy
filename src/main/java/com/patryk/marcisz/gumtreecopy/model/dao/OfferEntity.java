@@ -28,5 +28,7 @@ public class OfferEntity {
     private Integer price;
     @OneToOne
     private UserEntity creator;
+    @ManyToOne
+    private LocalizationEntity localization;
 
 }

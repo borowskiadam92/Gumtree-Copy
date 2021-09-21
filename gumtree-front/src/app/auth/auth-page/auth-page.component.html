@@ -1,6 +1,7 @@
 <div class="row">
-  <div class="col-xs-12 col-md-6 col-md-offset-3">
+  <div *ngIf="!isLoggedUser()" class="col-xs-12 col-md-6 col-md-offset-3">
     <div *ngIf="errorMessage" class="alert alert-danger"><p>{{errorMessage}}</p></div>
+    <div *ngIf="successMessage" class="alert alert-success"><p>{{successMessage}}</p></div>
     <form [formGroup]="authFormGroup" *ngIf="!isLoading">
       <div class="form-group">
         <label for="mail">Adres e-mail</label>
@@ -17,4 +18,9 @@
     </form>
     <app-loading-indicator [isLoading]="isLoading"></app-loading-indicator>
   </div>
+  <div *ngIf="isLoggedUser()" class="col-xs-12 col-md-6 col-md-offset-3">
+    <p>Witaj {{getUsername()}}</p>
+    <button class="btn btn-default" (click)="logout()">Wyloguj się</button>
+  </div>
+
 </div>

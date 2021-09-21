@@ -13,6 +13,5 @@ public class CreateUserRequest {
 
     private String mail;
     private String password;
-    private String nick;
 
 }

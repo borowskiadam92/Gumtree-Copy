@@ -6,6 +6,7 @@ import com.patryk.marcisz.gumtreecopy.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -27,8 +28,13 @@ public class UsersController {
     }
 
     @GetMapping("/current-user")
-    public UserResponse getCurrentUser(){
-        return UserResponse.builder().nick("ziomek").build();
+    public UserResponse getCurrentUser(Principal principal){
+        return userService.getUser(principal.getName());
+    }
+
+    @GetMapping("/activate-user/{confirmation-token}")
+    public void activateUser(@PathVariable("confirmation-token") String confirmationToken){
+        userService.activateUser(confirmationToken);
     }
 
 }

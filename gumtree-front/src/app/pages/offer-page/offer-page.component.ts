@@ -28,7 +28,7 @@ export class OfferPageComponent implements OnInit {
     this.title = this.activatedRoute.snapshot.params['title'];
     this.offerId = this.activatedRoute.snapshot.params['id'];
 
-    this.offersService.downloadOffer(String(this.offerId)).subscribe(response => {
+    this.offersService.getOfferById(String(this.offerId)).subscribe(response => {
       this.offer = response;
     });
   }

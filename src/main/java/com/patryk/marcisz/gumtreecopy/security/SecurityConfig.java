@@ -38,6 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
         http
                 .authorizeRequests()
                     .antMatchers(HttpMethod.POST, "/api/users").permitAll()
+                    .antMatchers(HttpMethod.GET, "/api/activate-user/*").permitAll()
                     .antMatchers(HttpMethod.POST, "/login").permitAll()
                     .antMatchers(HttpMethod.PUT, "/api/**").authenticated()
                     .antMatchers(HttpMethod.POST, "/api/**").authenticated()
@@ -48,13 +49,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                     .headers().frameOptions().sameOrigin()
                 .and()
                     .httpBasic()
-                //.and()
-                //    .formLogin()
                 .and()
                     .csrf()
                     .disable();
-        //ROLE_ADMIN
-        //ADMIN
     }
 
     @Override

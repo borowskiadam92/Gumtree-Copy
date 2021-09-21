@@ -19,4 +19,5 @@ public class OfferResponse {
     private long categoryId;
     private String publishDate;
     private String content;
+    private String localization;
 }

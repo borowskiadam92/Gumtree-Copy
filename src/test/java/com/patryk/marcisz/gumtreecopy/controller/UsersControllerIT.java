@@ -44,7 +44,6 @@ class UsersControllerIT {
         verify(userService).createUser(argumentCaptor.capture());
         CreateUserRequest value = argumentCaptor.getValue();
         assertEquals("user@user.pl", value.getMail());
-        assertEquals("fromZeroToHero", value.getNick());
         assertEquals("password12345", value.getPassword());
     }
 
