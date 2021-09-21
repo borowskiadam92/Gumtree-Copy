@@ -42,10 +42,10 @@ class OffersControllerIT {
     private MockMvc mockMvc;
 
     //sposob na wczytanie plikow z folderu resources
-    @Value("classpath:offers/get-offer-1-response.json")
+    @Value("classpath:userOffers/get-offer-1-response.json")
     private Resource getOfferResponse;
 
-    @Value("classpath:offers/post-offer-1-request.json")
+    @Value("classpath:userOffers/post-offer-1-request.json")
     private Resource createOfferRequest;
 
 

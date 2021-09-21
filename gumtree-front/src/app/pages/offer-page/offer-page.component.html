@@ -1,6 +1,6 @@
-<div *ngIf="offer">
-  <p>{{offer.title}}</p>
-  <p>Cena: {{offer.title}}</p>
-  <p>Data publikacji: {{offer.publishDate}}</p>
-  <p>Treść ogłoszenia: {{offer.content}}</p>
+<div *ngIf="offer" class="row">
+  <p class="h3">{{offer.title}}</p>
+  <p>Cena: <span class="h4">{{offer.price}}</span></p>
+  <p>Data publikacji: <span class="h4">{{offer.publishDate}}</span></p>
+  <p>Treść ogłoszenia: <span class="h4">"{{offer.content}}</span></p>
 </div>

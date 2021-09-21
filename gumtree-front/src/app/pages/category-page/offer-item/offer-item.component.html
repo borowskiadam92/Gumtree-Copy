@@ -1,0 +1,14 @@
+<div class="row list-group-item" style="margin-bottom: 10px" [routerLink]="['/', categoryName, offer.localization, offer.title, offer.id]">
+  <div class="col-md-8">
+    <div>
+      <h3 class="list-group-item-heading">{{offer.title}}</h3>
+      <span class="h5">"{{offer.content}}</span>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div>
+      <p>Cena: <span class="h4">{{offer.price}}</span></p>
+      <p>Data publikacji: <span class="h4">{{offer.publishDate}}</span></p>
+    </div>
+  </div>
+</div>

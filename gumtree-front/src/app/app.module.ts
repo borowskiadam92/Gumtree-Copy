@@ -17,6 +17,7 @@ import { LoadingIndicatorComponent } from './common/loading-indicator/loading-in
 import {AuthInterceptorService} from "./auth/auth-interceptor.service";
 import {EditOfferPageComponent} from "./pages/offer-page/edit-offer/edit-offer-page.component";
 import {DatePipe} from "@angular/common";
+import {OfferItemComponent} from "./pages/category-page/offer-item/offer-item.component";
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import {DatePipe} from "@angular/common";
     EditOfferPageComponent,
     AuthPageComponent,
     LoadingIndicatorComponent,
+    OfferItemComponent
   ],
   imports: [
     BrowserModule, //dostep do przegladarki?

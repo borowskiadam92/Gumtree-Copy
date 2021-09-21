@@ -32,32 +32,30 @@ export class EditOfferPageComponent implements OnInit {
     this.route.params.subscribe((param: Params) => {
       let offerId = param['offerId'];
       this.offerId = offerId;
-      if(this.offerId){
+      if (this.offerId) {
         this.editMode = true;
+        this.offersService.getOfferById(offerId).subscribe(offer => {
+            console.log(offer);
+            this.offer = offer;
+
+            delete this.offer.id;  //usuwamy, bo forma nie posiada takich pol
+            delete this.offer.creatorId;
+            delete this.offer.categoryId;
+            delete this.offer.localization;
+
+            this.editOfferFormGroup.setValue({'offerData': this.offer});
+          }
+        )
+
       }
-      this.offersService.getOfferById(offerId).subscribe(offer => {
-          console.log(offer);
-          this.offer = offer;
-
-          delete this.offer.id;  //usuwamy, bo forma nie posiada takich pol
-          delete this.offer.creatorId;
-          delete this.offer.categoryId;
-          delete this.offer.localization;
-
-          this.editOfferFormGroup.setValue({'offerData': this.offer});
-        }
-      )
     });
-
-    console.log(this.editOfferFormGroup);
-    console.log(this.editOfferFormGroup.valid);
   }
 
   onSubmit(): void {
     //pobieramy wartosci z formularza i wysylamy na backend, jak backend
     //odpowie 200 to zerujemy formularz albo przekierowujemy na strone glowna
     let formContent = this.editOfferFormGroup.getRawValue().offerData;
-    if(this.editMode){
+    if (this.editMode) {
       this.offersService.updateOffer(this.offerId, formContent).subscribe(success => {
         console.log(success)
       }, fail => {

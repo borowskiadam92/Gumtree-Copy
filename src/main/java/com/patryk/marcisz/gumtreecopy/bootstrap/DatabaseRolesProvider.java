@@ -4,7 +4,10 @@ import com.patryk.marcisz.gumtreecopy.model.dao.CategoryEntity;
 import com.patryk.marcisz.gumtreecopy.model.dao.LocalizationEntity;
 import com.patryk.marcisz.gumtreecopy.model.dao.OfferEntity;
 import com.patryk.marcisz.gumtreecopy.model.dao.UserEntity;
-import com.patryk.marcisz.gumtreecopy.repository.*;
+import com.patryk.marcisz.gumtreecopy.repository.CategoryRepository;
+import com.patryk.marcisz.gumtreecopy.repository.LocalizationRepository;
+import com.patryk.marcisz.gumtreecopy.repository.OfferRepository;
+import com.patryk.marcisz.gumtreecopy.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,7 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +33,11 @@ public class DatabaseRolesProvider implements CommandLineRunner {
     @Transactional
     public void run(String[] args) {
         hashPasswordOfInitialUsers();
+        setUpNieruchomosciCategory();
+        setUpNieruchomosciCategory();
+        setUpNieruchomosciCategory();
+        setUpNieruchomosciCategory();
+        setUpNieruchomosciCategory();
         setUpNieruchomosciCategory();
     }
 
@@ -54,8 +64,17 @@ public class DatabaseRolesProvider implements CommandLineRunner {
                 .build()
         );
 
-        user.setOffers(List.of(savedOffer));
-        mieszkanieIdomyDoWynajecia.setOffers(List.of(savedOffer));
+        Optional<List<OfferEntity>> userOffers = Optional.ofNullable(user.getOffers());
+        if(userOffers.isEmpty()){
+            user.setOffers(new ArrayList<>());
+        }
+        user.getOffers().add(savedOffer);
+
+        Optional<List<OfferEntity>> categoryOffers = Optional.ofNullable(mieszkanieIdomyDoWynajecia.getOffers());
+        if(categoryOffers.isEmpty()){
+            user.setOffers(new ArrayList<>());
+        }
+        mieszkanieIdomyDoWynajecia.getOffers().add(savedOffer);
     }
 
 }
