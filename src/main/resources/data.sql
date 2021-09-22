@@ -25,8 +25,8 @@ insert into categories(id, name, searchable_name, parent_id) values(21, 'narzęd
 insert into categories(id, name, searchable_name, parent_id) values(22, 'szafy, komody, regały', 'szafy-komody-regaly', 20);
 
 
-insert into localization(id, name, searchable_name, parent_id) values(1, 'Polska', 'wszystkie-lokalizacje', null);
-insert into localization(id, name, searchable_name, parent_id) values(2, 'Województwa', 'wojewodztwa', 1);
+insert into localization(id, name, searchable_name, parent_id) values(1, 'Wszystkie lokalizacje', 'wszystkie-lokalizacje', null);
+insert into localization(id, name, searchable_name, parent_id) values(2, 'Polska', 'polska', 1);
 insert into localization(id, name, searchable_name, parent_id) values(3, 'Dolnośląskie', 'dolnoslaskie', 2);
 insert into localization(id, name, searchable_name, parent_id) values(4, 'Kujawsko - pomorskie', 'kujawsko-pomorskie', 2);
 insert into localization(id, name, searchable_name, parent_id) values(5, 'Lubelskie', 'lubelskie', 2);

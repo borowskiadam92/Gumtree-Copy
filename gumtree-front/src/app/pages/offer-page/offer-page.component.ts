@@ -24,7 +24,7 @@ export class OfferPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.categoryName = this.activatedRoute.snapshot.params['category'];
-    this.localization = this.activatedRoute.snapshot.params['localization'];
+    this.localization = this.activatedRoute.snapshot.params['localization.ts'];
     this.title = this.activatedRoute.snapshot.params['title'];
     this.offerId = this.activatedRoute.snapshot.params['id'];
 

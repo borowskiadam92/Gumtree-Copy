@@ -17,8 +17,8 @@ const routes: Routes = [
   {path: 'edit-offer/:offerId', component: EditOfferPageComponent},
   {path: 'offers/:offerId', component: OfferPageComponent },
   {path: ':category', component: CategoryPageComponent},
-  {path: ':category/:localization', component: CategoryPageComponent},
-  {path: ':category/:localization/:title/:id', component: OfferPageComponent}];
+  {path: ':category/:localization.ts', component: CategoryPageComponent},
+  {path: ':category/:localization.ts/:title/:id', component: OfferPageComponent}];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

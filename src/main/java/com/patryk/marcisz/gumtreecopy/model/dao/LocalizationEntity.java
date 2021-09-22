@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "localization")
+@Table(name = "localization.ts")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

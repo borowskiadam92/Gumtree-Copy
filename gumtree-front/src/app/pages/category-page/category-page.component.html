@@ -42,14 +42,14 @@
 <!--  <div>-->
 
 <!--    <p class="h1">Oferty</p>-->
-<!--    &lt;!&ndash;    <div *ngFor="let offer of offers" [routerLink]="['/', category.searchableName, offer.localization, offer.title, offer.id]">&ndash;&gt;-->
+<!--    &lt;!&ndash;    <div *ngFor="let offer of offers" [routerLink]="['/', category.searchableName, offer.localization.ts, offer.title, offer.id]">&ndash;&gt;-->
 <!--    &lt;!&ndash;      <p>{{offer.title}}</p>&ndash;&gt;-->
 <!--    &lt;!&ndash;      <p>Cena: {{offer.price}}</p>&ndash;&gt;-->
 <!--    &lt;!&ndash;      <p>Data publikacji: {{offer.publishDate}}</p>&ndash;&gt;-->
 <!--    &lt;!&ndash;    </div>&ndash;&gt;-->
 <!--    <div *ngFor="let offer of offers"-->
 <!--         class="row"-->
-<!--         [routerLink]="['/', category.searchableName, offer.localization, offer.title, offer.id]">-->
+<!--         [routerLink]="['/', category.searchableName, offer.localization.ts, offer.title, offer.id]">-->
 <!--      <p class="h3">{{offer.title}}</p>-->
 <!--      <p>Cena: <span class="h4">{{offer.price}}</span></p>-->
 <!--      <p>Data publikacji: <span class="h4">{{offer.publishDate}}</span></p>-->

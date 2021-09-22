@@ -17,27 +17,56 @@
   <hr>
 </div>
 
-<!--<div class="row">-->
-<!--  <div class="col-sm">-->
-<!--    &lt;!&ndash;    <p>1</p>&ndash;&gt;-->
-<!--    &lt;!&ndash;    <p>1</p>&ndash;&gt;-->
-<!--    &lt;!&ndash;    <p>1</p>&ndash;&gt;-->
-<!--    <p>1</p>-->
-<!--  </div>-->
-<!--  <div class="col-sm">-->
-<!--    &lt;!&ndash;    <p>2</p>&ndash;&gt;-->
-<!--    &lt;!&ndash;    <p>2</p>&ndash;&gt;-->
-<!--    &lt;!&ndash;    <p>2</p>&ndash;&gt;-->
-<!--    &lt;!&ndash;    <p>2</p>&ndash;&gt;-->
-<!--    <p>2</p>-->
-<!--  </div>-->
-<!--  <div class="col-sm">-->
-<!--    &lt;!&ndash;    <p>3</p>&ndash;&gt;-->
-<!--    &lt;!&ndash;    <p>3</p>&ndash;&gt;-->
-<!--    &lt;!&ndash;    <p>3</p>&ndash;&gt;-->
-<!--    &lt;!&ndash;    <p>3</p>&ndash;&gt;-->
-<!--    <p>3</p>-->
-<!--  </div>-->
-<!--</div>-->
+<div class="row">
+  <div class="col">
+    <div class="row"><p class="h4 font-weight-bold">Popularne miasta</p></div>
+    <div class="row"><p class="h4 font-weight-bold">Popularne kategorie</p></div>
+  </div>
+  <div class="col">
+    <p class="h4 font-weight-bold">Lokalizacje</p>
+    <div *ngFor="let locItem of localizations">
+      <p class="h4">{{locItem.current.name}}</p>
+      <div class="row">
+        <div class="col">
+          <div *ngFor="let subloc of locItem.childrens; index as i">
+            <p *ngIf="i%3==0">{{subloc.name}}</p>
+          </div>
+        </div>
+        <div class="col">
+          <div *ngFor="let subloc of locItem.childrens; index as i">
+            <p *ngIf="i%3==1">{{subloc.name}}</p>
+          </div>
+        </div>
+        <div class="col">
+          <div *ngFor="let subloc of locItem.childrens; index as i">
+            <p *ngIf="i%3==2">{{subloc.name}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<!--<app-category-item *ngFor="let cat of categories" [category]="cat"></app-category-item>-->
+  <!--<div class="row">-->
+  <!--  <div class="col-sm">-->
+  <!--    &lt;!&ndash;    <p>1</p>&ndash;&gt;-->
+  <!--    &lt;!&ndash;    <p>1</p>&ndash;&gt;-->
+  <!--    &lt;!&ndash;    <p>1</p>&ndash;&gt;-->
+  <!--    <p>1</p>-->
+  <!--  </div>-->
+  <!--  <div class="col-sm">-->
+  <!--    &lt;!&ndash;    <p>2</p>&ndash;&gt;-->
+  <!--    &lt;!&ndash;    <p>2</p>&ndash;&gt;-->
+  <!--    &lt;!&ndash;    <p>2</p>&ndash;&gt;-->
+  <!--    &lt;!&ndash;    <p>2</p>&ndash;&gt;-->
+  <!--    <p>2</p>-->
+  <!--  </div>-->
+  <!--  <div class="col-sm">-->
+  <!--    &lt;!&ndash;    <p>3</p>&ndash;&gt;-->
+  <!--    &lt;!&ndash;    <p>3</p>&ndash;&gt;-->
+  <!--    &lt;!&ndash;    <p>3</p>&ndash;&gt;-->
+  <!--    &lt;!&ndash;    <p>3</p>&ndash;&gt;-->
+  <!--    <p>3</p>-->
+  <!--  </div>-->
+  <!--</div>-->
+
+  <!--<app-category-item *ngFor="let cat of categories" [category]="cat"></app-category-item>-->
