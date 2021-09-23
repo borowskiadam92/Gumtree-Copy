@@ -1,30 +1,71 @@
-<div class="row" *ngIf="category">
+<!--<div class="row" *ngIf="category">-->
+<!--  <p class="fw-bold h3 font-italic text-green-500">Kategorie</p>-->
+<!--  <ul>-->
+<!--    <li *ngFor="let cat of category.parents">-->
+<!--      <p [routerLink]="['/', cat.searchableName]">{{cat.name}}</p>-->
+<!--    </li>-->
+<!--    <ul>-->
+<!--      <li>{{category.categoryName}}</li>-->
+<!--      <ul>-->
+<!--        <li *ngFor="let cat of category.subcategories">-->
+<!--          <p [routerLink]="['/', cat.searchableName]">{{cat.name}}</p>-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </ul>-->
+<!--  </ul>-->
+<!--</div>-->
+
+<div class="row" *ngIf="category;">
   <div class="col-md-4">
-    <div>
-      <p class="h3">Kategorie</p>
-      <ul>
-        <li *ngFor="let cat of category.parents"><p><a [routerLink]="['/', cat.searchableName]">{{cat.name}}</a></p>
-        </li>
-        <ul>
-          <li><p>{{category.categoryName}}</p></li>
-          <ul>
-            <li *ngFor="let cat of category.subcategories">
-              <p><a [routerLink]="['/', cat.searchableName]">{{cat.name}}</a></p>
-            </li>
-          </ul>
-        </ul>
-      </ul>
-    </div>
-    <div>
-      <p class="h3">Lokalizacje</p>
-    </div>
+    <p class="ps-0 fw-bold h3 font-italic text-green-500">Kategorie</p>
+    <p [class]="['ps-'+i, 'ms-'+i]" *ngFor="let cat of category.parents; index as i"
+       [routerLink]="['/',cat.searchableName]">{{cat.name}}
+    </p>
+    <p [class]="['ps-'+category.parents?.length, 'ms-'+category.parents?.length]"
+       [routerLink]="['/',category.searchableName]">
+      {{category.categoryName}}
+    </p>
+    <p [class]="['ps-' + (1 + category.parents?.length), 'md-'+(1 + category.parents?.length)]"
+       [routerLink]="['/', cat.searchableName]"
+       *ngFor="let cat of category.subcategories">
+      {{cat.name}}
+    </p>
   </div>
   <div class="col-md-8">
     <p class="h3">Oferty</p>
     <app-offer-item *ngFor="let offer of offers" [offer]="offer"
                     [categoryName]="category.searchableName"></app-offer-item>
   </div>
+
 </div>
+
+<!--<div class="row" *ngIf="category">-->
+<!--  <div class="col-md-4">-->
+<!--    <div>-->
+<!--      <p class="h3">Kategorie</p>-->
+<!--      <ul>-->
+<!--        <li *ngFor="let cat of category.parents"><p><a [routerLink]="['/', cat.searchableName]">{{cat.name}}</a></p>-->
+<!--        </li>-->
+<!--        <ul>-->
+<!--          <li><p>{{category.categoryName}}</p></li>-->
+<!--          <ul>-->
+<!--            <li *ngFor="let cat of category.subcategories">-->
+<!--              <p><a [routerLink]="['/', cat.searchableName]">{{cat.name}}</a></p>-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--        </ul>-->
+<!--      </ul>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <p class="h3">Lokalizacje</p>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="col-md-8">-->
+<!--    <p class="h3">Oferty</p>-->
+<!--    <app-offer-item *ngFor="let offer of offers" [offer]="offer"-->
+<!--                    [categoryName]="category.searchableName"></app-offer-item>-->
+<!--  </div>-->
+<!--</div>-->
 
 <!--<div *ngIf="category">-->
 <!--  <ul>-->

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Offer} from "../../shared/model/offer";
 import {CategoryService} from "../../service/category.service";
 import {ActivatedRoute, Params, Router} from "@angular/router";
@@ -15,7 +15,8 @@ export class CategoryPageComponent implements OnInit {
   offers: Offer[];
 
   constructor(private categoryService: CategoryService, private router: Router,
-              private activatedRoute: ActivatedRoute, private authService: AuthService) { }
+              private activatedRoute: ActivatedRoute, private authService: AuthService) {
+  }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params: Params) => {
@@ -25,4 +26,7 @@ export class CategoryPageComponent implements OnInit {
     });
   }
 
+  getLevel() {
+
+  }
 }
