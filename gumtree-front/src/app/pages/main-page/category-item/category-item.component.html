@@ -1,25 +1,7 @@
-
-
-
-<!--<div class="row">-->
-<!--  <div *ngFor="let subcat of category.subcategories; index as i">-->
-<!--    <div class="col-md-4">-->
-<!--      <p class="font-weight-bold"><a [routerLink]="['/', category.searchableName]">{{category.categoryName}}</a></p>-->
-<!--      <div *ngFor="let subcat of category.subcategories">-->
-<!--        <div>-->
-<!--          <p class="font-italic"><a [routerLink]="['/', subcat.searchableName]">{{subcat.name}}</a></p>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div *ngIf="i%3==0" class="clearfix"></div>-->
-<!--    <hr>-->
-<!--  </div>-->
-<!--</div>-->
-
-<p class="font-weight-bold"><a [routerLink]="['/', category.searchableName]">{{category.categoryName}}</a></p>
+<p class="fw-bold text-green-500" [routerLink]="['/', category.searchableName]">{{category.categoryName}}</p>
 <div *ngFor="let subcat of category.subcategories">
   <div>
-    <p class="font-italic"><a [routerLink]="['/', subcat.searchableName]">{{subcat.name}}</a></p>
+    <p class="font-italic text-green-500" [routerLink]="['/', subcat.searchableName]">{{subcat.name}}</p>
   </div>
 </div>
 <hr>
