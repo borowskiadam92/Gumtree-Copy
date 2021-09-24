@@ -38,11 +38,27 @@
     </div>
   </div>
 </nav>
-<form class="d-flex bg-success p-2">
-      <input style="visibility: hidden" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-warning" type="submit">Szukaj</button>
-</form>
+<div class="d-flex bg-success p-2">
+  <input style="visibility: hidden" class="form-control me-2" type="search" placeholder="Czego szukasz?" aria-label="Search">
+  <input class="form-control me-2" type="search" placeholder="Czego szukasz?" aria-label="Search">
+<!--  <select class="form-select me-2" aria-label="Search">-->
+<!--&lt;!&ndash;    (click)="onCategoryChoose(cat)"   &ndash;&gt;-->
+<!--    <option selected>{{defaultCategory.categoryName}}</option>-->
+<!--    <option *ngFor="let cat of categories" (click)="onCategoryChoose($event)">{{cat.categoryName}}</option>-->
+<!--  </select>-->
+  <select [(ngModel)]="selectedCategory" class="form-select me-2">
+    <option selected [ngValue]="defaultCategory">{{defaultCategory.categoryName}}</option>
+    <option *ngFor="let cat of categories" [ngValue]="cat">
+      {{cat.categoryName}}
+    </option>
+  </select>
+  <select [(ngModel)]="selectedLocalization" class="form-select me-2" aria-label="Search">
+    <option selected [ngValue]="defaultLocalization">{{defaultLocalization.name}}</option>
+    <option *ngFor="let loc of localizations" [ngValue]="loc">{{loc.name}}</option>
+  </select>
+<!--  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
+  <button class="btn btn-warning" (click)="onSubmit()">Szukaj</button>
+</div>
 <div class="row my-4"></div>
+<!--{{selectedCategory | json}}-->
+<!--{{selectedCategory | json}}-->
